@@ -207,11 +207,11 @@ while (i < len(X)) :
 This Python script approximates the solution for the ODE $\eqref{eq:cx}$
 using an initial value $X_0=1$, a constant $c=2$ and equally spaced time
 points of size $h=0.1$ between $t_0=0$ and $t_n=2$. Run it in the following
-way from the Unix shell to store the results in a file called `ode2xh01.out`:
+way from the Unix shell to store the results in a file called `ode2xh01.csv`:
 
 ```
-$ python euler.py > ode2xh01.out
-$ head ode2xh01.out 
+$ python euler.py > ode2xh01.csv
+$ head ode2xh01.csv 
 t,dX
 0.00,1.00
 0.10,1.20
@@ -231,7 +231,7 @@ typing the following instructions:
 >>> import numpy as np
 >>> import pandas as pd
 >>> import matplotlib.pyplot as plt
->>> ode2xh01 = pd.read_csv("ode2xh01.out")
+>>> ode2xh01 = pd.read_csv("ode2xh01.csv")
 >>> plt.plot(ode2xh01['t'], ode2xh01['dX'], '-bo')
 >>> plt.plot(ode2xh01['t'], np.exp(2*ode2xh01['t']), '-ro')
 >>> plt.show()
@@ -283,7 +283,7 @@ values of $\rho$ and $\alpha$:
 
 
 * $\rho=1.5, \alpha=0.9$: Because $\rho > \alpha$ the stable equilibrium
-point of $I^*$ should be at 1-\alpha/\rho, does it match? The plot
+point of $I^*$ should be at $1-\alpha/\rho$, does it match? The plot
 should be similar to this one below.
 
 ![](sirrho15alpha09.png)
