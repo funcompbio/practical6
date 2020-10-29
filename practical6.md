@@ -80,9 +80,14 @@ disease from one person with that disease, also known as $R_0$ or
 
 Implement a script in Python called `sir.py` that takes the two previous terms
 $\rho$ and $\alpha$ as arguments in the command line and prints the calculation
-for $dI/dt$ using Equation $\eqref{eq:sir}$ and a fixed value of $I=0.1$. For
-instance, the following call should give `0.045` as a result when calling this
-script with $\rho=1.5$ and $\alpha=0.9$.
+for $dI/dt$ using Equation $\eqref{eq:sir}$ and a fixed value of $I=0.1$.
+Because the $\rho$ and $\alpha$ arguments are non-integer values, you will
+need to coerce them from character string to the Python data type _float_
+using the function `float()` instead of the function `int()` that you would
+normally use for integer values.
+
+For instance, the following call should give `0.045` as a result when calling
+this script with $\rho=1.5$ and $\alpha=0.9$.
 
 ```
 $ python sir.py 1.5 0.9
