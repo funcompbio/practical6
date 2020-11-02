@@ -49,9 +49,9 @@ We will be also using the Python libraries _numpy_, _pandas_ and _matplotlib_. T
 install them type on the command line the following instructions:
 
 ```
-pip install numpy
-pip install pandas
-pip install matplotlib
+$ pip install numpy
+$ pip install pandas
+$ pip install matplotlib
 ```
 
 If your Python 3.x installation is available through the `python3` command,
