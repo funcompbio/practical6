@@ -2,6 +2,7 @@
 layout: page
 title: Practical 6
 permalink: /practical6/
+use_math : true
 ---
 
 # Objectives
