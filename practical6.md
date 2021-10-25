@@ -19,7 +19,7 @@ The learning objectives for this practical are:
  * Debug your program when it doesn't work.
 
 Whenever you are stuck with an error, please consult the section
-entitled "Debugging" from [practical 4](/practical4/).
+entitled "Debugging" from [practical 4](/practical4#debugging/).
 
 # Setup and background
 
