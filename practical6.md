@@ -101,10 +101,10 @@ $ python highlyabundant.py 10
 
 # CpG dinucleotides
 
-The Wikipedia[page](https://en.wikipedia.org/wiki/DNA) for DNA says:
+The Wikipedia [page](https://en.wikipedia.org/wiki/DNA) for DNA says:
 
-> Deoxyribonucleic acid (DNA) is a polymer is a polymer composed of two
-> polynucleotide chains that coil around each other to form a double helix.
+> Deoxyribonucleic acid (DNA) is a polymer composed of two polynucleotide chains
+> that coil around each other to form a double helix.
 
 The nucleotides forming DNA are adenine (denoted by `A`), cytosine (`C`),
 guanine (`G`) and thymine (`T`). The Wikipedia
@@ -147,7 +147,7 @@ in cancer and whose
 [role in breast cancer susceptibility](https://en.wikipedia.org/wiki/BRCA1)
 was discovered by
 [Mary-Claire King](https://en.wikipedia.org/wiki/Mary-Claire_King) (in your
-spare time watch this 12-minute [video](https://www.youtube.com/watch?v=tOP5pUIYhv4)
+spare time, watch this 12-minute [video](https://www.youtube.com/watch?v=tOP5pUIYhv4)
 where she explains the few days before she was defending in front of a panel at the
 [NIH](https://www.nih.gov) the grant application that was ultimately approved
 and allowed her to develop her research on the role of the _BRCA1_ gene as a
@@ -168,9 +168,11 @@ $ python cpg.py BRCA.fa
 0
 ```
 
-Try also to have a modular design of your program, for instance by having
-a function for the calculation of the percentage of `CGs` given a vector of
-nucleotides.
+See the steps described in
+[practical 5](https://funcompbio.github.io/practical5/#reading-dna-from-fasta-files)
+on how to download the FASTA file of the DNA of a given gene. Try also to have
+a modular design of your program, for instance by having a function for the
+calculation of the percentage of `CGs` given a vector of nucleotides.
 
 # CAG tri-nucleotides
 
