@@ -1,159 +1,175 @@
 <h1 id="objectives">Objectives</h1>
-<p>This practical has been developed in collaboration with Dr. Javier Macia to strengthen some of the concepts and methods developed in the Mathematics subject, jointly with FCB. The learning objectives for this practical are:</p>
+<p>The learning objectives for this practical are:</p>
 <ul>
-<li>Implement in Python the SIR model of spreading infectious diseases.</li>
-<li>Parametrize the Python implementation from the command line.</li>
-<li>Use the implemented model to explore effect of different parameters.</li>
+<li>Implement a program in Python that decides if a given number is
+solitary or could have a friend.</li>
+<li>Implement a program in Python that decides if a given number is
+highly abundant.</li>
+<li>Implement a program in Python that calculates the percentage of CpG
+dinucleotides in a DNA sequence stored in a FASTA file.</li>
+<li>Implement a program in Python that calculates the number of
+<code>CAG</code> tri-nucleotides, and the position of the first
+<code>CAG</code> tri-nucleotide found, in a DNA sequence stored in a
+FASTA file.</li>
 <li>Make syntax errors in Python.</li>
 <li>Correct syntax errors in Python.</li>
 <li>Debug your program when it doesn’t work.</li>
 </ul>
-<p>Whenever you are stuck with an error, please consult the section entitled “Debugging” from <a href="/practical4#debugging">practical 4</a>.</p>
+<p>Whenever you are stuck with an error, please consult the section
+entitled “Debugging” from <a href="/practical4#debugging">practical
+4</a>.</p>
 <h1 id="setup-and-background">Setup and background</h1>
-<p>To do this practical you need an installation of Python version 3. You can find the instructions in the <a href="/setup/">setup</a> link on how to install Python version 3 in your system. Once Python is installed, you should be able to call it from the shell in the terminal window. You can check whether that is possible by typing:</p>
+<p>To do this practical you need an installation of Python version 3.
+You can find the instructions in the <a href="/setup/">setup</a> link on
+how to install Python version 3 in your system. Once Python is
+installed, you should be able to call it from the shell in the terminal
+window. You can check whether that is possible by typing:</p>
 <pre><code>$ which python
 $ python --version</code></pre>
-<p>It may happen that you have two Python installations, one corresponding to version 2.x and another to version 3.x. In that situation the previous command may say that your Python version is 2.x and to access the version 3 you need to call the executable <code>python3</code>. Try then for instance:</p>
+<p>It may happen that you have two Python installations, one
+corresponding to version 2.x and another to version 3.x. In that
+situation the previous command may say that your Python version is 2.x
+and to access the version 3 you need to call the executable
+<code>python3</code>. Try then for instance:</p>
 <pre><code>$ python3 --version</code></pre>
-<p>If this is your case, then whenever the executable <code>python</code> is invoked in the rest of this practical, please use <code>python3</code> instead.</p>
-<p>We will be also using the Python libraries <em>numpy</em>, <em>pandas</em> and <em>matplotlib</em>. To install them type on the command line the following instructions:</p>
-<pre><code>$ pip install numpy
-$ pip install pandas
-$ pip install matplotlib</code></pre>
-<p>If your Python 3.x installation is available through the <code>python3</code> command, replace the <code>pip</code> executable by <code>pip3</code>.</p>
-<h1 id="the-differential-equation-for-a-simplified-sir-model">The differential equation for a simplified SIR model</h1>
-<p>A simplified <a href="https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology">SIR model</a> of spreading an infection can be described with the following ordinary differential equation:</p>
-<p><span class="math display">\[\begin{equation}
-    \label{eq:sir}
-    \frac{dI}{dt}=\rho\cdot I \cdot (1 - I) - \alpha \cdot I
-  \end{equation} \]</span> where</p>
-<ul>
-<li><p><span class="math inline">\(I\)</span> is the fraction (<span class="math inline">\(0\leq I\leq 1\)</span>) of infected population. We split the entire population in two fractions, infected (<span class="math inline">\(I\)</span>) and uninfected (<span class="math inline">\(1-I\)</span>).</p></li>
-<li><p><span class="math inline">\(\rho\)</span> is the average number of people who will get infected with a contagious disease from one person with that disease, also known as <span class="math inline">\(R_0\)</span> or <a href="https://en.wikipedia.org/wiki/Basic_reproduction_number">basic reproduction number</a>.</p></li>
-<li><p><span class="math inline">\(\alpha\)</span> is the average number of people who recovers from the disease.</p></li>
-</ul>
-<p>Implement a script in Python called <code>sir.py</code> that takes the two previous terms <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\alpha\)</span> as arguments in the command line and prints the calculation for <span class="math inline">\(dI/dt\)</span> using Equation <span class="math inline">\(\eqref{eq:sir}\)</span> and a fixed value of <span class="math inline">\(I=0.1\)</span>. Because the <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\alpha\)</span> arguments are non-integer values, you will need to coerce them from character string to the Python data type <em>float</em> using the function <code>float()</code> instead of the function <code>int()</code> that you would normally use for integer values.</p>
-<p>For instance, the following call should give <code>0.045</code> as a result when calling this script with <span class="math inline">\(\rho=1.5\)</span> and <span class="math inline">\(\alpha=0.9\)</span>.</p>
-<pre><code>$ python sir.py 1.5 0.9
-0.045</code></pre>
-<p>Moreover, when the script is called without arguments or with the wrong number of arguments, the following message should be shown:</p>
-<pre><code>$ python sir.py 
-error: sir.py &lt;rho&gt; &lt;alpha&gt;</code></pre>
-<h1 id="solving-a-ordinary-differential-equation-with-the-euler-method">Solving a ordinary differential equation with the Euler method</h1>
-<p>A simple ordinary differential equation (ODE) of the form</p>
-<p><span class="math display">\[
-\begin{equation}
-\label{eq:cx}
-\frac{dX}{dt} = c\cdot X
-\end{equation}
-\]</span></p>
-<p>where <span class="math inline">\(X\)</span> changes with <span class="math inline">\(t\)</span> and <span class="math inline">\(c\)</span> is some constant value, it can be analytically solved by moving terms and integrating separately both sides of the equality as follows (see a <a href="https://en.wikipedia.org/wiki/Lists_of_integrals">list of integrals</a>)</p>
-<p><span class="math display">\[ \begin{eqnarray}
-   \frac{1}{X}\cdot dX &amp; = &amp; c\cdot dt \nonumber \\
-   ln(X) &amp; = &amp; c\cdot t \nonumber \\
-   X &amp; = &amp; e^{ct} \label{eq:ect}
-   \end{eqnarray} \]</span></p>
-<p>However, such an exact solution often does not exist and we need to rely on numerical integration methods to find an approximate solution. The simplest of such methods is the <a href="https://en.wikipedia.org/wiki/Euler_method">Euler’s method</a>, which is based on calculating the slope of the tangent line to the curve corresponding to the differential equation that we want to approximate.</p>
-<figure>
-<img src="Euler_method.png" alt="Exact curve shown in blue, approximation in red. Image taken from Wikipedia" /><figcaption aria-hidden="true">Exact curve shown in blue, approximation in red. Image taken from <a href="https://en.wikipedia.org/wiki/Euler_method">Wikipedia</a></figcaption>
-</figure>
-<p>Given a generic (first-order) ODE of the form</p>
-<p><span class="math display">\[ \frac{dX}{dt} = f(t, X) \]</span></p>
-<p>and equally-spaced time points</p>
-<p><span class="math display">\[ \begin{equation}
-     t = \{t_0, t_1, ..., t_n\} \nonumber
-   \end{equation} \]</span> so that for any two given time points</p>
-<p><span class="math display">\[ \begin{equation}
-     h =  t_i - t_{i-1} \nonumber
-   \end{equation} \]</span> the Euler’s method approximates the next value of <span class="math inline">\(X\)</span> using the following recurrence</p>
-<p><span class="math display">\[ \begin{eqnarray}
-     X_1 &amp; = &amp; X_0 + h\cdot f(t_0, X_0) \nonumber \\
-     X_2 &amp; = &amp; X_1 + h\cdot f(t_1, X_1) \nonumber \\
-     X_3 &amp; = &amp; X_2 + h\cdot f(t_2, X_2) \nonumber \\
-     \vdots &amp; = &amp; \vdots \nonumber \\
-     X_n &amp; = &amp; X_{n-1} + h\cdot f(t_{n-1}, X_{n-1}) \nonumber 
-   \end{eqnarray} \]</span></p>
-<p>for some initial (condition) value <span class="math inline">\(X_0\)</span>. This can be compactly written using the following recurrence formula</p>
-<p><span class="math display">\[ \begin{eqnarray}
-     X_i &amp; = &amp; X_{i-1} + h\cdot f(t_{i-1}, X_{i-1})
-   \end{eqnarray} \]</span></p>
-<p>We are going to illustrate the Euler’s method by implementing it in Python for the previous example Equation <span class="math inline">\(\eqref{eq:cx}\)</span>. In a file called <code>euler.py</code> enter the following code:</p>
-<pre><code>import numpy as np
-
-## ODE that we want to integrate
-def f(X, c) :
-    dX = c*X
-    return(dX)
-
-## Euler&#39;s method for numerical integration of the f() function
-def euler(X0, c, t) :
-    X = np.zeros(len(t))
-    X[0] = X0
-    h = t[1] - t[0]
-    i = 0
-    while (i &lt; (len(t)-1)) :
-        X[i+1] = X[i] + h * f(X[i], c)
-        i = i + 1
-
-    return(X)
-
-## set time points between 0 and 2 in steps (h) of 0.1
-t = np.arange(0, 2, 0.1)
-
-## initial value
-X0 = 1
-
-## constant for dX = c X
-c = 2
-
-## integrate dX = c X with Euler&#39;s method
-X = euler(X0, c, t)
-
-## print resulting values for each time point
-print(&quot;t,dX&quot;)
-i = 0
-while (i &lt; len(X)) :
-    print(&quot;%.3f,%.3f&quot; %(t[i], X[i]))
-    i = i + 1</code></pre>
-<p>This Python script approximates the solution for the ODE <span class="math inline">\(\eqref{eq:cx}\)</span> using an initial value <span class="math inline">\(X_0=1\)</span>, a constant <span class="math inline">\(c=2\)</span> and equally spaced time points of size <span class="math inline">\(h=0.1\)</span> between <span class="math inline">\(t_0=0\)</span> and <span class="math inline">\(t_n=2\)</span>. Run it in the following way from the Unix shell to store the results in a file called <code>ode2xh01.csv</code>:</p>
-<pre><code>$ python euler.py &gt; ode2xh01.csv
-$ head ode2xh01.csv 
-t,dX
-0.00,1.00
-0.10,1.20
-0.20,1.44
-0.30,1.73
-0.40,2.07
-0.50,2.49
-0.60,2.99
-0.70,3.58</code></pre>
-<p>Now, let’s visualize the calculated curve next to the exact solution from Equation <span class="math inline">\(eqref{eq:ect}\)</span> by running the Python interpreter and interactively typing the following instructions:</p>
-<pre><code>&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; import pandas as pd
-&gt;&gt;&gt; import matplotlib.pyplot as plt
-&gt;&gt;&gt; ode2xh01 = pd.read_csv(&quot;ode2xh01.csv&quot;)
-&gt;&gt;&gt; plt.plot(ode2xh01[&#39;t&#39;], ode2xh01[&#39;dX&#39;], &#39;-bo&#39;)
-&gt;&gt;&gt; plt.plot(ode2xh01[&#39;t&#39;], np.exp(2*ode2xh01[&#39;t&#39;]), &#39;-ro&#39;)
-&gt;&gt;&gt; plt.show()</code></pre>
-<p>The last three instructions are the ones to plot the results using the Python library <a href="https://matplotlib.org">matplotlib</a>, where the first two prepare the plotting layout and graphical parameters and the third one executes de plot on the screen. While this is happening the Python prompt will be waiting for the plotting window to close. Therefore, to continue using the Python interpreter you need to close the plotting window first.</p>
-<p>The resulting plot should look like this one below, where the red line corresponds to the exact solution and the blue line with dots to the approximate solution obtained by doing numerical integration with the Euler’s method.</p>
-<p><img src="dXEuler.png" /></p>
-<p>Change the size of the steps (<span class="math inline">\(h\)</span>) from 0.1 to a smaller size such as 0.05, calculate the approximate curve again and plot it next to the exact curve. Is this new approximation better or worse than the previous one? Could you think about why?</p>
-<h1 id="solving-the-simplified-sir-model">Solving the simplified SIR model</h1>
-<p>Finally, we are going to solve the simplified SIR model of Equation  by taking the code in <code>euler.py</code> and integrating it into our script <code>sir.py</code>. As part of this integration, please set the initial value of I at <span class="math inline">\(t_0\)</span> to <code>0.001</code> and the time points from <span class="math inline">\(t_0=0\)</span> to <span class="math inline">\(t_n=30\)</span> in steps of <span class="math inline">\(h=1\)</span> unit.</p>
-<p>Please also pay attention to the following points:</p>
-<ol type="1">
-<li><p>What should be the function <code>f()</code> from the <code>euler.py</code> script?</p></li>
-<li><p>What arguments should take now the function <code>euler()</code>? Should the code of this function change?</p></li>
-<li><p>What should be doing the <code>main()</code> function in our script <code>sir.py</code>?</p></li>
-</ol>
-<p>Once you have done the intregation of the code, you should be able to call the script <code>sir.py</code> in an analogous way we were doing it with the script <code>euler.py</code>, redirecting the output to a CSV file and being able to change the parameters <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\alpha\)</span> in the command line. More concretely, please run the simulation with the following values of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\alpha\)</span>:</p>
-<ul>
-<li><span class="math inline">\(\rho=1.5, \alpha=0.9\)</span>: Because <span class="math inline">\(\rho &gt; \alpha\)</span> the stable equilibrium point of <span class="math inline">\(I^*\)</span> should be at <span class="math inline">\(1-\alpha/\rho\)</span>, does it match? The plot should be similar to this one below.</li>
-</ul>
-<p><img src="sirrho15alpha09.png" /></p>
-<ul>
-<li><span class="math inline">\(\rho=1.5, \alpha=1.9\)</span>: Because <span class="math inline">\(\rho &lt; \alpha\)</span> the stable equilibrium point of <span class="math inline">\(I^*\)</span> should be at 0, does it match? The plot should be similar to this one below.</li>
-</ul>
-<p><img src="sirrho15alpha19.png" /></p>
-<p>Play with different values of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\alpha\)</span> to gain understanding on the dynamics of this simplified SIR model. A straightforward extension of the script would be to parametrize in command line the initial condition <span class="math inline">\(I_0\)</span> and the time points. A simple approach to parametrize the latter would be to assume a fixed starting time point and take the maximum time point <span class="math inline">\(t_n\)</span> and the step in time difference <span class="math inline">\(h\)</span>. You could also consider some default values for these additional parameters and that they would be <em>optional</em> for the user.</p>
+<p>If this is your case, then whenever the executable
+<code>python</code> is invoked in the rest of this practical, please use
+<code>python3</code> instead.</p>
+<h1 id="solitary-numbers">Solitary numbers</h1>
+<p>The Wikipedia <a
+href="https://en.wikipedia.org/wiki/Friendly_number">page</a> for
+friendly numbers says:</p>
+<blockquote>
+<p>In number theory, friendly numbers are two or more natural numbers
+with a common abundancy index, the ratio between the sum of divisors of
+a number and the number itself.</p>
+</blockquote>
+<p>Therefore, one says that two positive integer numbers are friendly,
+or simply <em>friends</em>, if the ratio between the sum of their
+respective divisors and themselves is the same. While with this
+definition we can decide whether two numbers are friends, there is no
+criterion to know whether a given number has friends at all. One says
+that a positive integer number is <a
+href="https://en.wikipedia.org/wiki/Friendly_number#Solitary_numbers">solitary</a>
+if it has no friends and it is known that this happens to those numbers
+whose <a
+href="https://en.wikipedia.org/wiki/Greatest_common_divisor">greatest
+common divisor (GCD)</a> between the sum of its divisors and itself is
+1. Remember that the <code>GCD(x, y)</code> of two positive integer
+numbers <code>x</code> and <code>y</code> is the largest divisor common
+to <code>x</code> and <code>y</code>.</p>
+<p>Implement a program in Python that given a positive integer number,
+it says whether that number is solitary our could have a friend,
+providing some message with the <code>print()</code> function. It is
+important that the program does <em>not</em> ask for the number, but
+instead it takes it as the first argument from the Unix shell
+command-line call, i.e., by doing something like:</p>
+<pre><code>$ python solitary.py 10</code></pre>
+<h1 id="highly-abundant-numbers">Highly abundant numbers</h1>
+<p>The Wikipedia <a
+href="https://en.wikipedia.org/wiki/Highly_abundant_number">page</a> for
+highly abundant numbers says:</p>
+<blockquote>
+<p>In mathematics, a highly abundant number is a natural number with the
+property that the sum of its divisors (including itself) is greater than
+the sum of the divisors of any smaller natural number.</p>
+</blockquote>
+<p>Implement a program in Python that given a positive integer number,
+it says whether that number is highly abundant or not, providing some
+message with the <code>print()</code> function. It is important that the
+program does <em>not</em> ask for the number, but instead it takes it as
+the first argument from the Unix shell command-line call, i.e., by doing
+something like:</p>
+<pre><code>$ python highlyabundant.py 10</code></pre>
+<h1 id="cpg-dinucleotides">CpG dinucleotides</h1>
+<p>The Wikipedia<a href="https://en.wikipedia.org/wiki/DNA">page</a> for
+DNA says:</p>
+<blockquote>
+<p>Deoxyribonucleic acid (DNA) is a polymer is a polymer composed of two
+polynucleotide chains that coil around each other to form a double
+helix.</p>
+</blockquote>
+<p>The nucleotides forming DNA are adenine (denoted by <code>A</code>),
+cytosine (<code>C</code>), guanine (<code>G</code>) and thymine
+(<code>T</code>). The Wikipedia <a
+href="https://en.wikipedia.org/wiki/CpG_site">page</a> for a CpG site
+says:</p>
+<blockquote>
+<p>CpG is shorthand for 5’—C—phosphate—G—3’ , that is, cytosine and
+guanine separated by only one phosphate group; phosphate links any two
+nucleosides together in DNA. The CpG notation is used to distinguish
+this single-stranded linear sequence from the CG base-pairing of
+cytosine and guanine for double-stranded sequences. […] CpG
+dinucleotides have long been observed to occur with a much lower
+frequency in the sequence of vertebrate genomes than would be expected
+due to random chance. […] This underrepresentation is a consequence of
+the high mutation rate of methylated CpG sites. […] CpG islands (or CG
+islands) are regions with a high frequency of CpG sites. […] CpG islands
+typically occur at or near the transcription start site of genes,
+particularly housekeeping genes, in vertebrates. […] In cancers, loss of
+expression of genes occurs about 10 times more frequently by
+hypermethylation of promoter CpG islands than by mutations.</p>
+</blockquote>
+<p>Implement a program in Python that given the name of a FASTA file
+containing the DNA sequence of a gene, it calculates the percentage of
+<code>CpG</code> sites for every line of DNA in the FASTA file. It is
+important that the program does <em>not</em> ask for the name of the
+FASTA file, but instead it takes it as the first argument from the Unix
+shell command-line call, i.e., by doing something like:</p>
+<pre><code>$ python cpg.py &lt;filename.fa&gt;</code></pre>
+<p>Try your program with the DNA of the <a
+href="https://www.ncbi.nlm.nih.gov/gene/672">Breast cancer type 1
+susceptibility gene (<em>BRCA1</em>)</a>, a tumor suppressor gene
+encoding a DNA repair enzyme that becomes hypermetilated in cancer and
+whose <a href="https://en.wikipedia.org/wiki/BRCA1">role in breast
+cancer susceptibility</a> was discovered by <a
+href="https://en.wikipedia.org/wiki/Mary-Claire_King">Mary-Claire
+King</a> (see this <a
+href="https://www.youtube.com/watch?v=tOP5pUIYhv4">video</a> where she
+explains the days before she was applying for the grant at the <a
+href="https://www.nih.gov">NIH</a> that allowed her to start her
+research on the role of the BRCA1 gene as a breast cancer susceptibility
+gene). The first 10 lines of output of your program should be the
+following percentage values:</p>
+<pre><code>$ python cpg.py BRCA.fa
+5
+2
+11
+14
+5
+8
+11
+17
+8
+0</code></pre>
+<p>Try also to have a modular design of your program, for instance by
+having a function for the calculation of the percentage of
+<code>CGs</code> given a vector of nucleotides.</p>
+<h1 id="cag-tri-nucleotides">CAG tri-nucleotides</h1>
+<p><a
+href="https://en.wikipedia.org/wiki/Huntington%27s_disease">Hungtingon’s
+disease</a> is an hereditary genetic disorder, caused by an expansion of
+consecutive repetitions of the <code>CAG</code> tri-nucleotide in a gene
+named after the disease, the <a
+href="https://www.ncbi.nlm.nih.gov/gene/3064">Huntingtin
+(<em>HTT</em>)</a> gene. Unaffected individuals usually have no more
+than 30 consecutive repetitions of the <code>CAG</code> tri-nucleotide
+in the <em>HTT</em> gene, while affected individuals usually have more
+than 37.</p>
+<p>Implement a program in Python that given the name of a FASTA file
+containing the DNA sequence of a gene, it calculates the total number of
+<code>CAG</code> tri-nucleotides and the position of the first
+<code>CAG</code> tri-nucleotide found in the DNA sequence. It is
+important that the program does <em>not</em> ask for the name of the
+FASTA file, but instead it takes it as the first argument from the Unix
+shell command-line call, i.e., by doing something like:</p>
+<pre><code>$ python cags.py &lt;filename&gt;</code></pre>
+<p>Try your program with the DNA of the <em>HTT</em> gene. The output
+for the <em>HTT</em> gene should this one:</p>
+<pre><code>$ python cags.py HTT.fa
+3982 CAG tri-nucleotides
+first CAG at position 33</code></pre>
+<p>Note that this is a simplified version of the biological question.
+Your program needs not to calculate the number of <em>consecutive</em>
+<code>CAG</code> tri-nucleotides, but simply the total number of
+<code>CAG</code> tri-nucleotides.</p>
