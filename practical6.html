@@ -82,10 +82,10 @@ the first argument from the Unix shell command-line call, i.e., by doing
 something like:</p>
 <pre><code>$ python highlyabundant.py 10</code></pre>
 <h1 id="cpg-dinucleotides">CpG dinucleotides</h1>
-<p>The Wikipedia<a href="https://en.wikipedia.org/wiki/DNA">page</a> for
-DNA says:</p>
+<p>The Wikipedia <a href="https://en.wikipedia.org/wiki/DNA">page</a>
+for DNA says:</p>
 <blockquote>
-<p>Deoxyribonucleic acid (DNA) is a polymer is a polymer composed of two
+<p>Deoxyribonucleic acid (DNA) is a polymer composed of two
 polynucleotide chains that coil around each other to form a double
 helix.</p>
 </blockquote>
@@ -124,13 +124,14 @@ encoding a DNA repair enzyme that becomes hypermetilated in cancer and
 whose <a href="https://en.wikipedia.org/wiki/BRCA1">role in breast
 cancer susceptibility</a> was discovered by <a
 href="https://en.wikipedia.org/wiki/Mary-Claire_King">Mary-Claire
-King</a> (see this <a
+King</a> (in your spare time, watch this 12-minute <a
 href="https://www.youtube.com/watch?v=tOP5pUIYhv4">video</a> where she
-explains the days before she was applying for the grant at the <a
-href="https://www.nih.gov">NIH</a> that allowed her to start her
-research on the role of the BRCA1 gene as a breast cancer susceptibility
-gene). The first 10 lines of output of your program should be the
-following percentage values:</p>
+explains the few days before she was defending in front of a panel at
+the <a href="https://www.nih.gov">NIH</a> the grant application that was
+ultimately approved and allowed her to develop her research on the role
+of the <em>BRCA1</em> gene as a breast cancer susceptibility gene). The
+first 10 lines of output of your program should be the following
+percentage values:</p>
 <pre><code>$ python cpg.py BRCA.fa
 5
 2
@@ -142,9 +143,12 @@ following percentage values:</p>
 17
 8
 0</code></pre>
-<p>Try also to have a modular design of your program, for instance by
-having a function for the calculation of the percentage of
-<code>CGs</code> given a vector of nucleotides.</p>
+<p>See the steps described in <a
+href="https://funcompbio.github.io/practical5/#reading-dna-from-fasta-files">practical
+5</a> on how to download the FASTA file of the DNA of a given gene. Try
+also to have a modular design of your program, for instance by having a
+function for the calculation of the percentage of <code>CGs</code> given
+a vector of nucleotides.</p>
 <h1 id="cag-tri-nucleotides">CAG tri-nucleotides</h1>
 <p><a
 href="https://en.wikipedia.org/wiki/Huntington%27s_disease">Hungtingon’s
