@@ -196,7 +196,7 @@ $ python cags.py <filename>
 ```
 
 Try your program with the DNA of the _HTT_ gene. The output for the _HTT_ gene
-should this one:
+should be this one:
 
 ```
 $ python cags.py HTT.fa
