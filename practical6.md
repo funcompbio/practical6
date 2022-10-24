@@ -7,14 +7,17 @@ use_math : true
 
 # Objectives
 
-This practical has been developed in collaboration with Dr. Javier
-Macia to strengthen some of the concepts and methods developed in
-the Mathematics subject, jointly with FCB.
 The learning objectives for this practical are:
 
- * Implement in Python the SIR model of spreading infectious diseases.
- * Parametrize the Python implementation from the command line.
- * Use the implemented model to explore effect of different parameters.
+ * Implement a program in Python that decides if a given number is solitary or
+   could have a friend.
+ * Implement a program in Python that decides if a given number is highly
+   abundant.
+ * Implement a program in Python that calculates the percentage of CpG
+   dinucleotides in a DNA sequence stored in a FASTA file.
+ * Implement a program in Python that calculates the number of `CAG`
+   tri-nucleotides, and the position of the first `CAG` tri-nucleotide found,
+   in a DNA sequence stored in a FASTA file.
  * Make syntax errors in Python.
  * Correct syntax errors in Python.
  * Debug your program when it doesn't work.
@@ -46,265 +49,159 @@ $ python3 --version
 If this is your case, then whenever the executable `python` is invoked in the rest of
 this practical, please use `python3` instead.
 
-We will be also using the Python libraries _numpy_, _pandas_ and _matplotlib_. To
-install them type on the command line the following instructions:
+# Solitary numbers
+
+The Wikipedia [page](https://en.wikipedia.org/wiki/Friendly_number) for friendly
+numbers says:
+
+> In number theory, friendly numbers are two or more natural numbers with a
+> common abundancy index, the ratio between the sum of divisors of a number and
+> the number itself.
+
+Therefore, one says that two positive integer numbers are friendly, or simply
+_friends_, if the ratio between the sum of their respective divisors and themselves
+is the same. While with this definition we can decide whether two numbers are
+friends, there is no criterion to know whether a given number has friends at all.
+One says that a positive integer number is
+[solitary](https://en.wikipedia.org/wiki/Friendly_number#Solitary_numbers)
+if it has no friends and it is known that this happens to those numbers whose
+[greatest common divisor (GCD)](https://en.wikipedia.org/wiki/Greatest_common_divisor)
+between the sum of its divisors and itself is 1. Remember that the `GCD(x, y)` of
+two positive integer numbers `x` and `y` is the largest divisor common to `x` and
+`y`.
+
+Implement a program in Python that given a positive integer number, it says
+whether that number is solitary our could have a friend, providing some message
+with the `print()` function. It is important that the program does *not* ask for
+the number, but instead it takes it as the first argument from the Unix shell
+command-line call, i.e., by doing something like:
 
 ```
-$ pip install numpy
-$ pip install pandas
-$ pip install matplotlib
+$ python solitary.py 10
 ```
 
-If your Python 3.x installation is available through the `python3` command,
-replace the `pip` executable by `pip3`.
+# Highly abundant numbers
 
-# The differential equation for a simplified SIR model
+The Wikipedia [page](https://en.wikipedia.org/wiki/Highly_abundant_number) for
+highly abundant numbers says:
 
-A simplified [SIR model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology)
-of spreading an infection can be described with the following ordinary
-differential equation:
+> In mathematics, a highly abundant number is a natural number with the property
+> that the sum of its divisors (including itself) is greater than the sum of the
+> divisors of any smaller natural number.
 
-$$\begin{equation}
-    \label{eq:sir}
-    \frac{dI}{dt}=\rho\cdot I \cdot (1 - I) - \alpha \cdot I
-  \end{equation} $$
-where
-
-* $I$ is the fraction ($0\leq I\leq 1$) of infected population. We split the entire
-population in two fractions, infected ($I$) and uninfected ($1-I$).
-
-* $\rho$ is the average number of people who will get infected with a contagious
-disease from one person with that disease, also known as $R_0$ or
-[basic reproduction number](https://en.wikipedia.org/wiki/Basic_reproduction_number).
-
-* $\alpha$ is the average number of people who recovers from the disease.
-
-Implement a script in Python called `sir.py` that takes the two previous terms
-$\rho$ and $\alpha$ as arguments in the command line and prints the calculation
-for $dI/dt$ using Equation $\eqref{eq:sir}$ and a fixed value of $I=0.1$.
-Because the $\rho$ and $\alpha$ arguments are non-integer values, you will
-need to coerce them from character string to the Python data type _float_
-using the function `float()` instead of the function `int()` that you would
-normally use for integer values.
-
-For instance, the following call should give `0.045` as a result when calling
-this script with $\rho=1.5$ and $\alpha=0.9$.
+Implement a program in Python that given a positive integer number, it says
+whether that number is highly abundant or not, providing some message with the
+`print()` function. It is important that the program does *not* ask for
+the number, but instead it takes it as the first argument from the Unix shell
+command-line call, i.e., by doing something like:
 
 ```
-$ python sir.py 1.5 0.9
-0.045
+$ python highlyabundant.py 10
 ```
 
-Moreover, when the script is called without arguments or with the wrong number of
-arguments, the following message should be shown:
+# CpG dinucleotides
+
+The Wikipedia[page](https://en.wikipedia.org/wiki/DNA) for DNA says:
+
+> Deoxyribonucleic acid (DNA) is a polymer is a polymer composed of two
+> polynucleotide chains that coil around each other to form a double helix.
+
+The nucleotides forming DNA are adenine (denoted by `A`), cytosine (`C`),
+guanine (`G`) and thymine (`T`). The Wikipedia
+[page](https://en.wikipedia.org/wiki/CpG_site) for a CpG site says:
+
+> CpG is shorthand for 5'—C—phosphate—G—3' , that is, cytosine and guanine
+> separated by only one phosphate group; phosphate links any two nucleosides
+> together in DNA. The CpG notation is used to distinguish this single-stranded
+> linear sequence from the CG base-pairing of cytosine and guanine for
+> double-stranded sequences.
+> [...]
+> CpG dinucleotides have long been observed to occur with a much lower frequency
+> in the sequence of vertebrate genomes than would be expected due to random chance.
+> [...]
+> This underrepresentation is a consequence of the high mutation rate of
+> methylated CpG sites.
+> [...]
+> CpG islands (or CG islands) are regions with a high frequency of CpG sites.
+> [...]
+> CpG islands typically occur at or near the transcription start site of genes,
+> particularly housekeeping genes, in vertebrates.
+> [...]
+> In cancers, loss of expression of genes occurs about 10 times more frequently
+> by hypermethylation of promoter CpG islands than by mutations.
+
+Implement a program in Python that given the name of a FASTA file containing
+the DNA sequence of a gene, it calculates the percentage of `CpG` sites for
+every line of DNA in the FASTA file. It is important that the program does
+*not* ask for the name of the FASTA file, but instead it takes it as the first
+argument from the Unix shell command-line call, i.e., by doing something like:
 
 ```
-$ python sir.py 
-error: sir.py <rho> <alpha>
+$ python cpg.py <filename.fa>
 ```
 
-# Solving a ordinary differential equation with the Euler method
-
-A simple ordinary differential equation (ODE) of the form
-
-$$
-\begin{equation}
-\label{eq:cx}
-\frac{dX}{dt} = c\cdot X
-\end{equation}
-$$
-
-where $X$ changes with $t$ and $c$ is some constant value, it can be
-analytically solved by moving terms and integrating separately both
-sides of the equality as follows
-(see a [list of integrals](https://en.wikipedia.org/wiki/Lists_of_integrals))
-
-$$ \begin{eqnarray}
-   \frac{1}{X}\cdot dX & = & c\cdot dt \nonumber \\
-   ln(X) & = & c\cdot t \nonumber \\
-   X & = & e^{ct} \label{eq:ect}
-   \end{eqnarray} $$
-
-However, such an exact solution often does not exist and we need to
-rely on numerical integration methods to find an approximate solution.
-The simplest of such methods is the
-[Euler's method](https://en.wikipedia.org/wiki/Euler_method), which is
-based on calculating the slope of the tangent line to the curve corresponding
-to the differential equation that we want to approximate.
-
-![Exact curve shown in blue, approximation in red. Image taken from [Wikipedia](https://en.wikipedia.org/wiki/Euler_method)](Euler_method.png)
-
-Given a generic (first-order) ODE of the form
-
-$$ \frac{dX}{dt} = f(t, X) $$
-
-and equally-spaced time points
-
-$$ \begin{equation}
-     t = \{t_0, t_1, ..., t_n\} \nonumber
-   \end{equation} $$
-so that for any two given time points
-
-$$ \begin{equation}
-     h =  t_i - t_{i-1} \nonumber
-   \end{equation} $$
-the Euler's method approximates the next value of $X$ using
-the following recurrence
-
-$$ \begin{eqnarray}
-     X_1 & = & X_0 + h\cdot f(t_0, X_0) \nonumber \\
-     X_2 & = & X_1 + h\cdot f(t_1, X_1) \nonumber \\
-     X_3 & = & X_2 + h\cdot f(t_2, X_2) \nonumber \\
-     \vdots & = & \vdots \nonumber \\
-     X_n & = & X_{n-1} + h\cdot f(t_{n-1}, X_{n-1}) \nonumber 
-   \end{eqnarray} $$
-
-for some initial (condition) value $X_0$. This can
-be compactly written using the following recurrence formula
-
-$$ \begin{eqnarray}
-     X_i & = & X_{i-1} + h\cdot f(t_{i-1}, X_{i-1})
-   \end{eqnarray} $$
-
-We are going to illustrate the Euler's method by implementing it
-in Python for the previous example Equation $\eqref{eq:cx}$.
-In a file called `euler.py` enter the following code:
+Try your program with the DNA of the
+[Breast cancer type 1 susceptibility gene (_BRCA1_)](https://www.ncbi.nlm.nih.gov/gene/672),
+a tumor suppressor gene encoding a DNA repair enzyme that becomes hypermetilated
+in cancer and whose
+[role in breast cancer susceptibility](https://en.wikipedia.org/wiki/BRCA1)
+was discovered by
+[Mary-Claire King](https://en.wikipedia.org/wiki/Mary-Claire_King) (in your
+spare time watch this 12-minute [video](https://www.youtube.com/watch?v=tOP5pUIYhv4)
+where she explains the few days before she was defending in front of a panel at the
+[NIH](https://www.nih.gov) the grant application that was ultimately approved
+and allowed her to develop her research on the role of the _BRCA1_ gene as a
+breast cancer susceptibility gene). The first 10 lines of output of your program
+should be the following percentage values:
 
 ```
-import numpy as np
-
-## ODE that we want to integrate
-def f(X, c) :
-    dX = c*X
-    return(dX)
-
-## Euler's method for numerical integration of the f() function
-def euler(X0, c, t) :
-    X = np.zeros(len(t))
-    X[0] = X0
-    h = t[1] - t[0]
-    i = 0
-    while (i < (len(t)-1)) :
-        X[i+1] = X[i] + h * f(X[i], c)
-        i = i + 1
-
-    return(X)
-
-## set time points between 0 and 2 in steps (h) of 0.1
-t = np.arange(0, 2, 0.1)
-
-## initial value
-X0 = 1
-
-## constant for dX = c X
-c = 2
-
-## integrate dX = c X with Euler's method
-X = euler(X0, c, t)
-
-## print resulting values for each time point
-print("t,dX")
-i = 0
-while (i < len(X)) :
-    print("%.3f,%.3f" %(t[i], X[i]))
-    i = i + 1
+$ python cpg.py BRCA.fa
+5
+2
+11
+14
+5
+8
+11
+17
+8
+0
 ```
 
-This Python script approximates the solution for the ODE $\eqref{eq:cx}$
-using an initial value $X_0=1$, a constant $c=2$ and equally spaced time
-points of size $h=0.1$ between $t_0=0$ and $t_n=2$. Run it in the following
-way from the Unix shell to store the results in a file called `ode2xh01.csv`:
+Try also to have a modular design of your program, for instance by having
+a function for the calculation of the percentage of `CGs` given a vector of
+nucleotides.
+
+# CAG tri-nucleotides
+
+[Hungtingon's disease](https://en.wikipedia.org/wiki/Huntington%27s_disease) is
+an hereditary genetic disorder, caused by an expansion of consecutive repetitions
+of the `CAG` tri-nucleotide in a gene named after the disease, the
+[Huntingtin (_HTT_)](https://www.ncbi.nlm.nih.gov/gene/3064) gene. Unaffected
+individuals usually have no more than 30 consecutive repetitions of the `CAG`
+tri-nucleotide in the _HTT_ gene, while affected individuals usually have more
+than 37.
+
+Implement a program in Python that given the name of a FASTA file containing
+the DNA sequence of a gene, it calculates the total number of `CAG` tri-nucleotides
+and the position of the first `CAG` tri-nucleotide found in the DNA sequence. It
+is important that the program does *not* ask for the name of the FASTA file, but
+instead it takes it as the first argument from the Unix shell command-line call,
+i.e., by doing something like:
 
 ```
-$ python euler.py > ode2xh01.csv
-$ head ode2xh01.csv 
-t,dX
-0.00,1.00
-0.10,1.20
-0.20,1.44
-0.30,1.73
-0.40,2.07
-0.50,2.49
-0.60,2.99
-0.70,3.58
+$ python cags.py <filename>
 ```
 
-Now, let's visualize the calculated curve next to the exact solution from
-Equation $eqref{eq:ect}$ by running the Python interpreter and interactively
-typing the following instructions:
+Try your program with the DNA of the _HTT_ gene. The output for the _HTT_ gene
+should this one:
 
 ```
->>> import numpy as np
->>> import pandas as pd
->>> import matplotlib.pyplot as plt
->>> ode2xh01 = pd.read_csv("ode2xh01.csv")
->>> plt.plot(ode2xh01['t'], ode2xh01['dX'], '-bo')
->>> plt.plot(ode2xh01['t'], np.exp(2*ode2xh01['t']), '-ro')
->>> plt.show()
+$ python cags.py HTT.fa
+3982 CAG tri-nucleotides
+first CAG at position 33
 ```
 
-The last three instructions are the ones to plot the results using
-the Python library [matplotlib](https://matplotlib.org), where the
-first two prepare the plotting layout and graphical parameters and
-the third one executes de plot on the screen. While this is happening
-the Python prompt will be waiting for the plotting window to close.
-Therefore, to continue using the Python interpreter you need to close
-the plotting window first.
-
-The resulting plot should look like this one below, where the red line
-corresponds to the exact solution and the blue line with dots to the
-approximate solution obtained by doing numerical integration with the
-Euler's method.
-
-![](dXEuler.png)
-
-Change the size of the steps ($h$) from 0.1 to a smaller size such as
-0.05, calculate the approximate curve again and plot it next to the
-exact curve. Is this new approximation better or worse than the
-previous one? Could you think about why?
-
-# Solving the simplified SIR model
-
-Finally, we are going to solve the simplified SIR model of Equation
-\eqref{eq:sir} by taking the code in `euler.py` and integrating it
-into our script `sir.py`. As part of this integration, please set
-the initial value of I at $t_0$ to `0.001` and the time points from
-$t_0=0$ to $t_n=30$ in steps of $h=1$ unit.
-
-Please also pay attention to the following points:
-
-1. What should be the function `f()` from the `euler.py` script?
-
-2. What arguments should take now the function `euler()`? Should the
-code of this function change?
-
-3. What should be doing the `main()` function in our script `sir.py`? 
-
-Once you have done the intregation of the code, you should be able
-to call the script `sir.py` in an analogous way we were doing it with
-the script `euler.py`, redirecting the output to a CSV file and being
-able to change the parameters $\rho$ and $\alpha$ in the command
-line. More concretely, please run the simulation with the following
-values of $\rho$ and $\alpha$:
-
-
-* $\rho=1.5, \alpha=0.9$: Because $\rho > \alpha$ the stable equilibrium
-point of $I^*$ should be at $1-\alpha/\rho$, does it match? The plot
-should be similar to this one below.
-
-![](sirrho15alpha09.png)
-
-* $\rho=1.5, \alpha=1.9$: Because $\rho < \alpha$ the stable equilibrium
-point of $I^*$ should be at 0, does it match? The plot should be
-similar to this one below.
-
-![](sirrho15alpha19.png)
-
-Play with different values of $\rho$ and $\alpha$ to gain understanding
-on the dynamics of this simplified SIR model. A straightforward extension
-of the script would be to parametrize in command line the initial condition
-$I_0$ and the time points. A simple approach to parametrize the latter would
-be to assume a fixed starting time point and take the maximum time point
-$t_n$ and the step in time difference $h$. You could also consider some
-default values for these additional parameters and that they would be
-_optional_ for the user.
+Note that this is a simplified version of the biological question. Your program
+needs not to calculate the number of _consecutive_ `CAG` tri-nucleotides, but
+simply the total number of `CAG` tri-nucleotides.
