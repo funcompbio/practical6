@@ -133,22 +133,29 @@ of the <em>BRCA1</em> gene as a breast cancer susceptibility gene). The
 first 10 lines of output of your program should be the following
 percentage values:</p>
 <pre><code>$ python cpg.py BRCA.fa
-5
-2
-11
-14
-5
-8
-11
-17
-8
-0</code></pre>
-<p>See the steps described in <a
+5.7
+2.9
+11.4
+14.3
+5.7
+8.6
+11.4
+17.1
+8.6
+0.0</code></pre>
+<p>Note that to get one decimal digits you should use the placeholder
+<code>%.1f</code> in the format string that you give to the print
+function (see the explanation about format strings in section “Adding
+two numbers” from <a
+href="https://funcompbio.github.io/practical4/#adding-two-numbers">practical
+4</a>). Also, beware that you should be using Python version 3.x,
+otherwise you may not get the decimal numbers.</p>
+<p>In <a
 href="https://funcompbio.github.io/practical5/#reading-dna-from-fasta-files">practical
-5</a> on how to download the FASTA file of the DNA of a given gene. Try
-also to have a modular design of your program, for instance by having a
-function for the calculation of the percentage of <code>CGs</code> given
-a vector of nucleotides.</p>
+5</a> you will find the steps on how to download the FASTA file of the
+DNA of a given gene. Try also to have a modular design of your program,
+for instance by having a function for the calculation of the percentage
+of <code>CGs</code> given a vector of nucleotides.</p>
 <h1 id="cag-tri-nucleotides">CAG tri-nucleotides</h1>
 <p><a
 href="https://en.wikipedia.org/wiki/Huntington%27s_disease">Hungtingon’s
