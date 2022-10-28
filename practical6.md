@@ -184,7 +184,7 @@ vector of nucleotides.
 
 # CAG tri-nucleotides
 
-[Hungtingon's disease](https://en.wikipedia.org/wiki/Huntington%27s_disease) is
+[Huntington's disease](https://en.wikipedia.org/wiki/Huntington%27s_disease) is
 an hereditary genetic disorder, caused by an expansion of consecutive repetitions
 of the `CAG` tri-nucleotide in a gene named after the disease, the
 [Huntingtin (_HTT_)](https://www.ncbi.nlm.nih.gov/gene/3064) gene. Unaffected
