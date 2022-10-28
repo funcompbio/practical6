@@ -1,179 +1,68 @@
 <h1 id="objectives">Objectives</h1>
 <p>The learning objectives for this practical are:</p>
 <ul>
-<li>Implement a program in Python that decides if a given number is
-solitary or could have a friend.</li>
-<li>Implement a program in Python that decides if a given number is
-highly abundant.</li>
-<li>Implement a program in Python that calculates the percentage of CpG
-dinucleotides in a DNA sequence stored in a FASTA file.</li>
-<li>Implement a program in Python that calculates the number of
-<code>CAG</code> tri-nucleotides, and the position of the first
-<code>CAG</code> tri-nucleotide found, in a DNA sequence stored in a
-FASTA file.</li>
+<li>Implement a program in Python that decides if a given number is solitary or could have a friend.</li>
+<li>Implement a program in Python that decides if a given number is highly abundant.</li>
+<li>Implement a program in Python that calculates the percentage of CpG dinucleotides in a DNA sequence stored in a FASTA file.</li>
+<li>Implement a program in Python that calculates the number of <code>CAG</code> tri-nucleotides, and the position of the first <code>CAG</code> tri-nucleotide found, in a DNA sequence stored in a FASTA file.</li>
 <li>Make syntax errors in Python.</li>
 <li>Correct syntax errors in Python.</li>
 <li>Debug your program when it doesn’t work.</li>
 </ul>
-<p>Whenever you are stuck with an error, please consult the section
-entitled “Debugging” from <a href="/practical4#debugging">practical
-4</a>.</p>
+<p>Whenever you are stuck with an error, please consult the section entitled “Debugging” from <a href="/practical4#debugging">practical 4</a>.</p>
 <h1 id="setup-and-background">Setup and background</h1>
-<p>To do this practical you need an installation of Python version 3.
-You can find the instructions in the <a href="/setup/">setup</a> link on
-how to install Python version 3 in your system. Once Python is
-installed, you should be able to call it from the shell in the terminal
-window. You can check whether that is possible by typing:</p>
+<p>To do this practical you need an installation of Python version 3. You can find the instructions in the <a href="/setup/">setup</a> link on how to install Python version 3 in your system. Once Python is installed, you should be able to call it from the shell in the terminal window. You can check whether that is possible by typing:</p>
 <pre><code>$ which python
 $ python --version</code></pre>
-<p>It may happen that you have two Python installations, one
-corresponding to version 2.x and another to version 3.x. In that
-situation the previous command may say that your Python version is 2.x
-and to access the version 3 you need to call the executable
-<code>python3</code>. Try then for instance:</p>
+<p>It may happen that you have two Python installations, one corresponding to version 2.x and another to version 3.x. In that situation the previous command may say that your Python version is 2.x and to access the version 3 you need to call the executable <code>python3</code>. Try then for instance:</p>
 <pre><code>$ python3 --version</code></pre>
-<p>If this is your case, then whenever the executable
-<code>python</code> is invoked in the rest of this practical, please use
-<code>python3</code> instead.</p>
+<p>If this is your case, then whenever the executable <code>python</code> is invoked in the rest of this practical, please use <code>python3</code> instead.</p>
 <h1 id="solitary-numbers">Solitary numbers</h1>
-<p>The Wikipedia <a
-href="https://en.wikipedia.org/wiki/Friendly_number">page</a> for
-friendly numbers says:</p>
+<p>The Wikipedia <a href="https://en.wikipedia.org/wiki/Friendly_number">page</a> for friendly numbers says:</p>
 <blockquote>
-<p>In number theory, friendly numbers are two or more natural numbers
-with a common abundancy index, the ratio between the sum of divisors of
-a number and the number itself.</p>
+<p>In number theory, friendly numbers are two or more natural numbers with a common abundancy index, the ratio between the sum of divisors of a number and the number itself.</p>
 </blockquote>
-<p>Therefore, one says that two positive integer numbers are friendly,
-or simply <em>friends</em>, if the ratio between the sum of their
-respective divisors and themselves is the same. While with this
-definition we can decide whether two numbers are friends, there is no
-criterion to know whether a given number has friends at all. One says
-that a positive integer number is <a
-href="https://en.wikipedia.org/wiki/Friendly_number#Solitary_numbers">solitary</a>
-if it has no friends and it is known that this happens to those numbers
-whose <a
-href="https://en.wikipedia.org/wiki/Greatest_common_divisor">greatest
-common divisor (GCD)</a> between the sum of its divisors and itself is
-1. Remember that the <code>GCD(x, y)</code> of two positive integer
-numbers <code>x</code> and <code>y</code> is the largest divisor common
-to <code>x</code> and <code>y</code>.</p>
-<p>Implement a program in Python that given a positive integer number,
-it says whether that number is solitary our could have a friend,
-providing some message with the <code>print()</code> function. It is
-important that the program does <em>not</em> ask for the number, but
-instead it takes it as the first argument from the Unix shell
-command-line call, i.e., by doing something like:</p>
+<p>Therefore, one says that two positive integer numbers are friendly, or simply <em>friends</em>, if the ratio between the sum of their respective divisors and themselves is the same. While with this definition we can decide whether two numbers are friends, there is no criterion to know whether a given number has friends at all. One says that a positive integer number is <a href="https://en.wikipedia.org/wiki/Friendly_number#Solitary_numbers">solitary</a> if it has no friends and it is known that this happens to those numbers whose <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor">greatest common divisor (GCD)</a> between the sum of its divisors and itself is 1. Remember that the <code>GCD(x, y)</code> of two positive integer numbers <code>x</code> and <code>y</code> is the largest divisor common to <code>x</code> and <code>y</code>.</p>
+<p>Implement a program in Python that given a positive integer number, it says whether that number is solitary our could have a friend, providing some message with the <code>print()</code> function. It is important that the program does <em>not</em> ask for the number, but instead it takes it as the first argument from the Unix shell command-line call, i.e., by doing something like:</p>
 <pre><code>$ python solitary.py 10</code></pre>
 <h1 id="highly-abundant-numbers">Highly abundant numbers</h1>
-<p>The Wikipedia <a
-href="https://en.wikipedia.org/wiki/Highly_abundant_number">page</a> for
-highly abundant numbers says:</p>
+<p>The Wikipedia <a href="https://en.wikipedia.org/wiki/Highly_abundant_number">page</a> for highly abundant numbers says:</p>
 <blockquote>
-<p>In mathematics, a highly abundant number is a natural number with the
-property that the sum of its divisors (including itself) is greater than
-the sum of the divisors of any smaller natural number.</p>
+<p>In mathematics, a highly abundant number is a natural number with the property that the sum of its divisors (including itself) is greater than the sum of the divisors of any smaller natural number.</p>
 </blockquote>
-<p>Implement a program in Python that given a positive integer number,
-it says whether that number is highly abundant or not, providing some
-message with the <code>print()</code> function. It is important that the
-program does <em>not</em> ask for the number, but instead it takes it as
-the first argument from the Unix shell command-line call, i.e., by doing
-something like:</p>
+<p>Implement a program in Python that given a positive integer number, it says whether that number is highly abundant or not, providing some message with the <code>print()</code> function. It is important that the program does <em>not</em> ask for the number, but instead it takes it as the first argument from the Unix shell command-line call, i.e., by doing something like:</p>
 <pre><code>$ python highlyabundant.py 10</code></pre>
 <h1 id="cpg-dinucleotides">CpG dinucleotides</h1>
-<p>The Wikipedia <a href="https://en.wikipedia.org/wiki/DNA">page</a>
-for DNA says:</p>
+<p>The Wikipedia <a href="https://en.wikipedia.org/wiki/DNA">page</a> for DNA says:</p>
 <blockquote>
-<p>Deoxyribonucleic acid (DNA) is a polymer composed of two
-polynucleotide chains that coil around each other to form a double
-helix.</p>
+<p>Deoxyribonucleic acid (DNA) is a polymer composed of two polynucleotide chains that coil around each other to form a double helix.</p>
 </blockquote>
-<p>The nucleotides forming DNA are adenine (denoted by <code>A</code>),
-cytosine (<code>C</code>), guanine (<code>G</code>) and thymine
-(<code>T</code>). The Wikipedia <a
-href="https://en.wikipedia.org/wiki/CpG_site">page</a> for a CpG site
-says:</p>
+<p>The nucleotides forming DNA are adenine (denoted by <code>A</code>), cytosine (<code>C</code>), guanine (<code>G</code>) and thymine (<code>T</code>). The Wikipedia <a href="https://en.wikipedia.org/wiki/CpG_site">page</a> for a CpG site says:</p>
 <blockquote>
-<p>CpG is shorthand for 5’—C—phosphate—G—3’ , that is, cytosine and
-guanine separated by only one phosphate group; phosphate links any two
-nucleosides together in DNA. The CpG notation is used to distinguish
-this single-stranded linear sequence from the CG base-pairing of
-cytosine and guanine for double-stranded sequences. […] CpG
-dinucleotides have long been observed to occur with a much lower
-frequency in the sequence of vertebrate genomes than would be expected
-due to random chance. […] This underrepresentation is a consequence of
-the high mutation rate of methylated CpG sites. […] CpG islands (or CG
-islands) are regions with a high frequency of CpG sites. […] CpG islands
-typically occur at or near the transcription start site of genes,
-particularly housekeeping genes, in vertebrates. […] In cancers, loss of
-expression of genes occurs about 10 times more frequently by
-hypermethylation of promoter CpG islands than by mutations.</p>
+<p>CpG is shorthand for 5’—C—phosphate—G—3’ , that is, cytosine and guanine separated by only one phosphate group; phosphate links any two nucleosides together in DNA. The CpG notation is used to distinguish this single-stranded linear sequence from the CG base-pairing of cytosine and guanine for double-stranded sequences. […] CpG dinucleotides have long been observed to occur with a much lower frequency in the sequence of vertebrate genomes than would be expected due to random chance. […] This underrepresentation is a consequence of the high mutation rate of methylated CpG sites. […] CpG islands (or CG islands) are regions with a high frequency of CpG sites. […] CpG islands typically occur at or near the transcription start site of genes, particularly housekeeping genes, in vertebrates. […] In cancers, loss of expression of genes occurs about 10 times more frequently by hypermethylation of promoter CpG islands than by mutations.</p>
 </blockquote>
-<p>Implement a program in Python that given the name of a FASTA file
-containing the DNA sequence of a gene, it calculates the percentage of
-<code>CpG</code> sites for every line of DNA in the FASTA file. It is
-important that the program does <em>not</em> ask for the name of the
-FASTA file, but instead it takes it as the first argument from the Unix
-shell command-line call, i.e., by doing something like:</p>
+<p>Implement a program in Python that given the name of a FASTA file containing the DNA sequence of a gene, it calculates the percentage of <code>CpG</code> sites for every line of DNA in the FASTA file. It is important that the program does <em>not</em> ask for the name of the FASTA file, but instead it takes it as the first argument from the Unix shell command-line call, i.e., by doing something like:</p>
 <pre><code>$ python cpg.py &lt;filename.fa&gt;</code></pre>
-<p>Try your program with the DNA of the <a
-href="https://www.ncbi.nlm.nih.gov/gene/672">Breast cancer type 1
-susceptibility gene (<em>BRCA1</em>)</a>, a tumor suppressor gene
-encoding a DNA repair enzyme that becomes hypermetilated in cancer and
-whose <a href="https://en.wikipedia.org/wiki/BRCA1">role in breast
-cancer susceptibility</a> was discovered by <a
-href="https://en.wikipedia.org/wiki/Mary-Claire_King">Mary-Claire
-King</a> (in your spare time, watch this 12-minute <a
-href="https://www.youtube.com/watch?v=tOP5pUIYhv4">video</a> where she
-explains the few days before she was defending in front of a panel at
-the <a href="https://www.nih.gov">NIH</a> the grant application that was
-ultimately approved and allowed her to develop her research on the role
-of the <em>BRCA1</em> gene as a breast cancer susceptibility gene). The
-first 10 lines of output of your program should be the following
-percentage values:</p>
+<p>Try your program with the DNA of the <a href="https://www.ncbi.nlm.nih.gov/gene/672">Breast cancer type 1 susceptibility gene (<em>BRCA1</em>)</a>, a tumor suppressor gene encoding a DNA repair enzyme that becomes hypermetilated in cancer and whose <a href="https://en.wikipedia.org/wiki/BRCA1">role in breast cancer susceptibility</a> was discovered by <a href="https://en.wikipedia.org/wiki/Mary-Claire_King">Mary-Claire King</a> (in your spare time, watch this 12-minute <a href="https://www.youtube.com/watch?v=tOP5pUIYhv4">video</a> where she explains the few days before she was defending in front of a panel at the <a href="https://www.nih.gov">NIH</a> the grant application that was ultimately approved and allowed her to develop her research on the role of the <em>BRCA1</em> gene as a breast cancer susceptibility gene). The first 10 lines of output of your program should be the following percentage values:</p>
 <pre><code>$ python cpg.py BRCA.fa
-5
-2
-11
-14
-5
-8
-11
-17
-8
-0</code></pre>
-<p>See the steps described in <a
-href="https://funcompbio.github.io/practical5/#reading-dna-from-fasta-files">practical
-5</a> on how to download the FASTA file of the DNA of a given gene. Try
-also to have a modular design of your program, for instance by having a
-function for the calculation of the percentage of <code>CGs</code> given
-a vector of nucleotides.</p>
+5.7
+2.9
+11.4
+14.3
+5.7
+8.6
+11.4
+17.1
+8.6
+0.0</code></pre>
+<p>Note that to get one decimal digits you should use the placeholder <code>%.1f</code> in the format string that you give to the print function (see the explanation about format strings in section “Adding two numbers” from <a href="https://funcompbio.github.io/practical4/#adding-two-numbers">practical 4</a>). Also, beware that you should be using Python version 3.x, otherwise you may not get the decimal numbers.</p>
+<p>In <a href="https://funcompbio.github.io/practical5/#reading-dna-from-fasta-files">practical 5</a> you will find the steps on how to download the FASTA file of the DNA of a given gene. Try also to have a modular design of your program, for instance by having a function for the calculation of the percentage of <code>CGs</code> given a vector of nucleotides.</p>
 <h1 id="cag-tri-nucleotides">CAG tri-nucleotides</h1>
-<p><a
-href="https://en.wikipedia.org/wiki/Huntington%27s_disease">Hungtingon’s
-disease</a> is an hereditary genetic disorder, caused by an expansion of
-consecutive repetitions of the <code>CAG</code> tri-nucleotide in a gene
-named after the disease, the <a
-href="https://www.ncbi.nlm.nih.gov/gene/3064">Huntingtin
-(<em>HTT</em>)</a> gene. Unaffected individuals usually have no more
-than 30 consecutive repetitions of the <code>CAG</code> tri-nucleotide
-in the <em>HTT</em> gene, while affected individuals usually have more
-than 37.</p>
-<p>Implement a program in Python that given the name of a FASTA file
-containing the DNA sequence of a gene, it calculates the total number of
-<code>CAG</code> tri-nucleotides and the position of the first
-<code>CAG</code> tri-nucleotide found in the DNA sequence. It is
-important that the program does <em>not</em> ask for the name of the
-FASTA file, but instead it takes it as the first argument from the Unix
-shell command-line call, i.e., by doing something like:</p>
+<p><a href="https://en.wikipedia.org/wiki/Huntington%27s_disease">Huntington’s disease</a> is an hereditary genetic disorder, caused by an expansion of consecutive repetitions of the <code>CAG</code> tri-nucleotide in a gene named after the disease, the <a href="https://www.ncbi.nlm.nih.gov/gene/3064">Huntingtin (<em>HTT</em>)</a> gene. Unaffected individuals usually have no more than 30 consecutive repetitions of the <code>CAG</code> tri-nucleotide in the <em>HTT</em> gene, while affected individuals usually have more than 37.</p>
+<p>Implement a program in Python that given the name of a FASTA file containing the DNA sequence of a gene, it calculates the total number of <code>CAG</code> tri-nucleotides and the position of the first <code>CAG</code> tri-nucleotide found in the DNA sequence. It is important that the program does <em>not</em> ask for the name of the FASTA file, but instead it takes it as the first argument from the Unix shell command-line call, i.e., by doing something like:</p>
 <pre><code>$ python cags.py &lt;filename&gt;</code></pre>
-<p>Try your program with the DNA of the <em>HTT</em> gene. The output
-for the <em>HTT</em> gene should be this one:</p>
+<p>Try your program with the DNA of the <em>HTT</em> gene. The output for the <em>HTT</em> gene should be this one:</p>
 <pre><code>$ python cags.py HTT.fa
 3982 CAG tri-nucleotides
 first CAG at position 33</code></pre>
-<p>Note that this is a simplified version of the biological question.
-Your program needs not to calculate the number of <em>consecutive</em>
-<code>CAG</code> tri-nucleotides, but simply the total number of
-<code>CAG</code> tri-nucleotides.</p>
+<p>Note that this is a simplified version of the biological question. Your program needs not to calculate the number of <em>consecutive</em> <code>CAG</code> tri-nucleotides, but simply the total number of <code>CAG</code> tri-nucleotides.</p>
