@@ -168,12 +168,11 @@ $ python cpg.py BRCA.fa
 0.0
 ```
 
-Note that to get one decimal digits you should use the placeholder
-`%.1f` in the format string that you give to the print function
+Note that to get one decimal digits you should use the format specifier
+`{z:.1f}`, if `z` would be the name of the variable with the result, in the
+formatted string literal that you give to the print function
 (see the explanation about format strings in section "Adding two numbers"
 from [practical 4](https://funcompbio.github.io/practical4/#adding-two-numbers)).
-Also, beware that you should be using Python version 3.x, otherwise you
-may not get the decimal numbers.
 
 In
 [practical 5](https://funcompbio.github.io/practical5/#reading-dna-from-fasta-files)
