@@ -157,15 +157,15 @@ should be the following percentage values:
 ```
 $ python cpg.py BRCA.fa
 5.7
-2.9
 11.4
 14.3
-5.7
-8.6
-11.4
+20.0
+2.9
+2.9
 17.1
-8.6
-0.0
+5.7
+11.4
+11.4
 ```
 
 Note that to get one decimal digits you should use the format specifier
