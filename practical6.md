@@ -9,10 +9,7 @@ use_math : true
 
 The learning objectives for this practical are:
 
- * Implement a program in Python that decides if a given number is solitary or
-   could have a friend.
- * Implement a program in Python that decides if a given number is highly
-   abundant.
+ * Reading DNA from FASTA files.
  * Implement a program in Python that calculates the percentage of CpG
    dinucleotides in a DNA sequence stored in a FASTA file.
  * Implement a program in Python that calculates the number of `CAG`
@@ -38,66 +35,157 @@ $ python --version
 ```
 
 It may happen that you have two Python installations, one corresponding
-to version 2.x and another to version 3.x. In that situation the previous command
-may say that your Python version is 2.x and to access the version 3 you need to call
-the executable `python3`. Try then for instance:
+to version 2.x and another to version 3.x. In that situation the previous
+command may say that your Python version is 2.x and to access the version 3 you
+need to call the executable `python3`. Try then for instance:
 
 ```
 $ python3 --version
 ```
 
-If this is your case, then whenever the executable `python` is invoked in the rest of
-this practical, please use `python3` instead.
+If this is your case, then whenever the executable `python` is invoked in the
+rest of this practical, please use `python3` instead.
 
-# Solitary numbers
+# Reading DNA from FASTA files
 
-The Wikipedia [page](https://en.wikipedia.org/wiki/Friendly_number) for friendly
-numbers says:
+Following the explanation from Wikipedia, in bioinformatics
+the [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) is a
+text-based file format for representing sequences of either
+[nucleic acids](https://en.wikipedia.org/wiki/Nucleic_acid_sequence) or
+[amino acids](https://en.wikipedia.org/wiki/Amino_acid). Here, we want
+to learn how can we read from a Python program the DNA sequence of a gene
+stored in FASTA format within a text file and make some simple summaries
+of the DNA content from that gene. We are going to illustrate
+that task with the
+[_hemoglobin subunit beta_ (HBB) gene](https://en.wikipedia.org/wiki/Hemoglobin_subunit_beta), which is a gene coding for a protein that forms part of
+[haemoglobin](https://en.wikipedia.org/wiki/Hemoglobin), the molecule
+responsible for transporting oxygen in
+[red blood cells](https://en.wikipedia.org/wiki/Red_blood_cell) of
+almost all
+[vertebrates](https://en.wikipedia.org/wiki/Vertebrate).
 
-> In number theory, friendly numbers are two or more natural numbers with a
-> common abundancy index, the ratio between the sum of divisors of a number and
-> the number itself.
+First, let's download the FASTA file of the DNA of the human _HBB_ gene
+following these steps:
 
-Therefore, one says that two positive integer numbers are friendly, or simply
-_friends_, if the ratio between the sum of their respective divisors and themselves
-is the same. While with this definition we can decide whether two numbers are
-friends, there is no criterion to know whether a given number has friends at all.
-One says that a positive integer number is
-[solitary](https://en.wikipedia.org/wiki/Friendly_number#Solitary_numbers)
-if it has no friends and it is known that this happens to those numbers whose
-[greatest common divisor (GCD)](https://en.wikipedia.org/wiki/Greatest_common_divisor)
-between the sum of its divisors and itself is 1. Remember that the `GCD(x, y)` of
-two positive integer numbers `x` and `y` is the largest divisor common to `x` and
-`y`.
+1. Go to the NCBI web page for the human _HBB_ gene at this
+  [link](https://www.ncbi.nlm.nih.gov/gene/3043).
+2. Scroll down to the section entitled "Genomic regions, transcripts and
+   products" and click on the link called `FASTA`, as indicated by the
+   red arrow in the following image.
 
-Implement a program in Python that given a positive integer number, it says
-whether that number is solitary our could have a friend, providing some message
-with the `print()` function. It is important that the program does *not* ask for
-the number, but instead it takes it as the first argument from the Unix shell
-command-line call, i.e., by doing something like:
+   ![](ncbigene1.jpg)
+
+3. In the next page, click on the link called `Send to:`, from the
+   pull-down menu click on `File` and finally on the button
+   `Create File`, as indicated by the red arrows in the following image.
+
+   ![](ncbigene2.jpg)
+
+4. A file called `sequence.fasta` will be downloaded from your browser,
+   probably into your downloads directory. Move it into the folder that
+   you are using for this practical under the name `HBB.fa`. This is the
+   FASTA file containing the DNA of the human _HBB_ gene.
+5. Examine the first lines of this FASTA file with the Unix
+   `head` command. The result should be as follows:
+
+      ```
+      $ head HBB.fa
+      >NC_000011.10:c5227071-5225464 Homo sapiens chromosome 11, GRCh38.p14 Primary Assembly
+      ACATTTGCTTCTGACACAACTGTGTTCACTAGCAACCTCAAACAGACACCATGGTGCATCTGACTCCTGA
+      GGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC
+      AGGTTGGTATCAAGGTTACAAGACAGGTTTAAGGAGACCAATAGAAACTGGGCATGTGGAGACAGAGAAG
+      ACTCTTGGGTTTCTGATAGGCACTGACTCTCTCTGCCTATTGGTCTATTTTCCCACCCTTAGGCTGCTGG
+      TGGTCTACCCTTGGACCCAGAGGTTCTTTGAGTCCTTTGGGGATCTGTCCACTCCTGATGCTGTTATGGG
+      CAACCCTAAGGTGAAGGCTCATGGCAAGAAAGTGCTCGGTGCCTTTAGTGATGGCCTGGCTCACCTGGAC
+      AACCTCAAGGGCACCTTTGCCACACTGAGTGAGCTGCACTGTGACAAGCTGCACGTGGATCCTGAGAACT
+      TCAGGGTGAGTCTATGGGACGCTTGATGTTTTCTTTCCCCTTCTTTTCTATGGTTAAGTTCATGTCATAG
+      GAAGGGGATAAGTAACAGGGTACAGTTTAGAATGGGAAACAGACGAATGATTGCATCAGTGTGGAAGTCT
+      ```
+
+Next, create a new text file called `tallynt.py` with the following
+Python program:
 
 ```
-$ python solitary.py 10
+f = open("HBB.fa")
+line = f.readline()                  ## read the first line from HBB.fa
+print("The DNA sequence from gene:")
+print(line.strip())                  ## print the first line from HBB.fa
+
+seq = ""                             ## seq will store the whole gene DNA
+while (line) :                       ## while 'line' is not empty
+    line = f.readline()              ## read the next line from HBB.fa
+    seq = seq + line.strip()         ## concatenate that line to 'seq'
+
+v = list(seq)                        ## convert 'seq' into a vector 'v'
+n = len(v)                           ## calculate the length of vector 'v'
+print(f"has a total of {n} nucleotides")
 ```
 
-# Highly abundant numbers
+This Python program reads the lines from `HBB.fa` and concanates them
+into a single character string called `seq`, which afterwards is
+converted into a vector `v`, from which we calculate its length,
+corresponding to the total number of nucleotides in the DNA encoding
+the gene _HBB_. It includes a call to the following functions:
 
-The Wikipedia [page](https://en.wikipedia.org/wiki/Highly_abundant_number) for
-highly abundant numbers says:
+* [`open()`](https://www.w3schools.com/python/ref_func_open.asp),
+  which opens a text file and returns an object that allows one to read
+  lines from that file using the method
+  [`f.readline()`](https://www.w3schools.com/python/ref_file_readline.asp),
+  for some file object `f`.
+* [`str.strip()`](https://www.w3schools.com/python/ref_string_strip.asp),
+  where `str` is some character string object and it removes any leading and
+  trailing spaces and newlines from that string.
 
-> In mathematics, a highly abundant number is a natural number with the property
-> that the sum of its divisors (including itself) is greater than the sum of the
-> divisors of any smaller natural number.
-
-Implement a program in Python that given a positive integer number, it says
-whether that number is highly abundant or not, providing some message with the
-`print()` function. It is important that the program does *not* ask for
-the number, but instead it takes it as the first argument from the Unix shell
-command-line call, i.e., by doing something like:
+When you run this program, the output must be as follows:
 
 ```
-$ python highlyabundant.py 10
+$ python tallynt.py
+The DNA sequence from gene:
+>NC_000011.10:c5227071-5225464 Homo sapiens chromosome 11, GRCh38.p14 Primary Assembly
+has a total of 1608 nucleotides
 ```
+Notice that you could also count the nucleotides using a Unix shell command line
+as follows:
+```
+$ grep -v '>' HBB.fa | fold -1 | wc -l
+1609
+```
+
+Try to understand what is doing each bit of the previous Unix
+command-line. Could you figure out why this command line is giving a number
+that is one unit larger than what our Python programe gives?
+
+1. Enable the program to take the name of the FASTA file as a first
+  argument in the command line, so that it can work with any FASTA
+  file containing DNA from any gene. Run it, for instance, with the
+  DNA from the the
+  [angiotensin converting enzyme 2 (_ACE2_) gene](https://www.ncbi.nlm.nih.gov/gene/59272),
+  which encodes a protein that acts as a
+  [receptor for the spike glycoprotein of the human coronavirus SARS-CoV-2](https://www.nytimes.com/interactive/2020/03/11/science/how-coronavirus-hijacks-your-cells.html),
+  the causative agent of coronavirus disease-2019 (COVID-19), e.g.:
+
+      ```
+      $ python tallynt.py ACE2.fa
+      ```
+
+2. Enable the program to take a second argument where we specify one
+  of the four possible nucleotides (`A`, `C`, `G` or `T`) and it
+  calculates the number of occurrences of that nucleotide in the DNA
+  sequence of the gene, e.g.:
+
+      ```
+      $ python tallynt.py HBB.fa A
+      ```
+   You can verify whether the calculation is correct by doing it also
+   in Unix with the following command line:
+
+      ```
+      $ grep -v '>' HBB.fa | fold -1 | grep A | wc -l
+      411
+      ```
+   Try to understand what is doing each bit of the previous Unix shell
+   command line. Could you think of a way to tally all four nucleotides
+   in the same command line?
 
 # CpG dinucleotides
 
