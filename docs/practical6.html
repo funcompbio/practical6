@@ -91,15 +91,15 @@ has a total of 1608 nucleotides</code></pre>
 <p>Try your program with the DNA of the <a href="https://www.ncbi.nlm.nih.gov/gene/672">Breast cancer type 1 susceptibility gene (<em>BRCA1</em>)</a>, a tumor suppressor gene encoding a DNA repair enzyme that becomes hypermetilated in cancer and whose <a href="https://en.wikipedia.org/wiki/BRCA1">role in breast cancer susceptibility</a> was discovered by <a href="https://en.wikipedia.org/wiki/Mary-Claire_King">Mary-Claire King</a> (in your spare time, watch this 12-minute <a href="https://www.youtube.com/watch?v=tOP5pUIYhv4">video</a> where she explains the few days before she was defending in front of a panel at the <a href="https://www.nih.gov">NIH</a> the grant application that was ultimately approved and allowed her to develop her research on the role of the <em>BRCA1</em> gene as a breast cancer susceptibility gene). The first 10 lines of output of your program should be the following percentage values:</p>
 <pre><code>$ python cpg.py BRCA1.fa
 5.7
-2.9
 11.4
 14.3
-5.7
-8.6
-11.4
+20.0
+2.9
+2.9
 17.1
-8.6
-0.0</code></pre>
+5.7
+11.4
+11.4</code></pre>
 <p>Note that to get one decimal digits you should use the format specifier <code>{z:.1f}</code>, if <code>z</code> would be the name of the variable with the result, in the formatted string literal that you give to the print function (see the explanation about format strings in section “Adding two numbers” from <a href="https://funcompbio.github.io/practical4/#adding-two-numbers">practical 4</a>).</p>
 <p>In the previous section entitled <a href="#reading-dna-from-fasta-files"><em>Reading DNA from FASTA files</em></a> you will find the steps on how to download the FASTA file of the DNA of a given gene and how to read the DNA into a vector. Try also to have a modular design of your program, for instance by having a function for the calculation of the percentage of <code>CGs</code> given a vector of nucleotides.</p>
 <h1 id="cag-tri-nucleotides">CAG tri-nucleotides</h1>
